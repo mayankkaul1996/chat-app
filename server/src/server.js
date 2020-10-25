@@ -22,7 +22,7 @@ const socketio = require('./common/socket/socket.io');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '../../client/build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 
