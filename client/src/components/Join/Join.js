@@ -8,12 +8,17 @@ const Join = () =>{
      const [name, setName] = useState('');
      const [room, setRoom] = useState('');
 
+     const userData = JSON.parse(localStorage.getItem('user'));
      return (
            <div className="joinOuterContainer">
-
+             <div className="joinMainContainer">
+             <div className="joinHeader card card-stats">
+             <h1 className="joinHeaderName">{userData.name}</h1>
+             </div>
                 <div className="joinInnerContainer">
 
-                    <h1 className="heading">Join</h1>
+
+                    <h1 className="joinheading">Join</h1>
 
                     <div><input placeholder="Name" className="joinInput" type="text" onChange={ event => setName(event.target.value) } /></div>
 
@@ -23,6 +28,7 @@ const Join = () =>{
                          <button className="button mt-20" type="submit">Sign In</button>
                     </Link>
 
+                </div>
                 </div>
 
            </div>

@@ -4,6 +4,9 @@ const dotenv = require('dotenv');
 const path = require('path');
 const httpStatusCodes = require('http-status-codes');
 const router = require('./common/app.router');
+const cors = require('cors');
+const mongodao = require('./common/mongo/mongodao');
+const mongoConstants = require('./common/mongo/mongo.constants');
 
 const app = express();
 const server = http.createServer(app);
@@ -12,13 +15,16 @@ global.appRoot = path.resolve(__dirname);
 dotenv.config({ path: appRoot + '/../.env' })
 global.HttpStatus = httpStatusCodes;
 global.server = server;
+global.mongo = mongodao;
+mongodao.connectDB(process.env.MONGO_DB_URL);
+global.mongoConstants = mongoConstants;
 
 const PORT = process.env.PORT || 3010;
 const exitTimeout = 15000;
 
 //dependacies
 const socketio = require('./common/socket/socket.io');
-
+const test = require('./modules/auth/auth');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -78,6 +84,48 @@ app.use(function(req, res, next) {
         });
     };
     next();
+});
+
+
+let corsOptionsDelegate = function(req, callback) {
+    let corsOptions;
+    // if (process.env.WHITELIST.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+        // } else {
+        // 	corsOptions = { origin: false } // disable CORS for this request
+        // }
+    callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+app.use('*', (req, res, next) => {
+    res.set({
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-Content-Type-Options': 'nosniff',
+        'X-DNS-Prefetch-Control': 'off',
+        'maxAge': process.env.MAX_AGE,
+        'includeSubDomains': true,
+        'preload': true,
+        'preflightContinue': false,
+        'Access-Control-Allow-Origin': process.env.WHITELIST,
+        'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+        'Access-Control-Allow-Methods': 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
+    });
+
+    const result = /^(http(s)?(:\/\/))?((.*)\.)?leadschool\.in(\/.*)?$/.test(req.headers.referer);
+    if (req.headers.source === 'webapp' && !result && (process.env.SERVER_SETUP === 'production' || process.env.SERVER_SETUP === 'staging')) {
+        const msg = '<h1>SECURITY ALERT!!</h1><p>Looks like you are using the erp from an unauthorized website. Please follow the steps below.</p><ol><li>Type erp.leadschool.in in your browser.</li><li>Immediately change your password.</li><li>Report this at excellence@leadschool.in immediately</li></ol><h1>SECURITY ALERT!!</h1>';
+        log.logWarn({ warning: msg, referer: req.headers.referer });
+        return res.bhejdo(HttpStatus.NOT_FOUND, { success: false, msg: msg });
+    } else {
+        for (let q in req.query) {
+            req.query[q] = decodeURIComponent(req.query[q]);
+        }
+        for (let q in req.params) {
+            req.params[q] = decodeURIComponent(req.params[q]);
+        }
+
+        cors(corsOptionsDelegate)(req, res, next);
+    }
 });
 
 
