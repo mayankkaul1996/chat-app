@@ -42,14 +42,14 @@ io.on('connection', (socket) => {
 
         console.log('User had left');
 
-        const connection = socketIOServices.removeSocketConnection(socket.id);
+        //const connection = socketIOServices.removeSocketConnection(socket.id);
 
-        if (connection) {
+        // if (connection) {
 
-            io.to(connection.room).emit('message', { user: { name: 'admin', room: -1, id: -1 }, text: `${connection.name}, has left the room` });
+        //     io.to(connection.room).emit('message', { user: { name: 'admin', room: -1, id: -1 }, text: `${connection.name}, has left the room` });
 
-            io.to(connection.room).emit('roomData', { room: connection.room, users: socketIOServices.getSocketsInRoom(connection.room) });
-        }
+        //     io.to(connection.room).emit('roomData', { room: connection.room, users: socketIOServices.getSocketsInRoom(connection.room) });
+        // }
 
     });
 
