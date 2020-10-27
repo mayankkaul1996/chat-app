@@ -19,7 +19,7 @@ body {
     text-align: center;
     height: 100vh;
     align-items: center;
-    background-color: #1A1A1D;
+    background-color: white;
 }
 
 .joinInnerContainer {
@@ -38,11 +38,11 @@ body {
     height: 10%;
     background: white;
     /* border-radius: 20px; */
-    box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -moz-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -webkit-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -o-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -ms-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
+    box-shadow: 0 1px 12px 0 #2979ff;
+    -moz-box-shadow: 0 1px 12px 0 #2979ff;
+    -webkit-box-shadow: 0 1px 12px 0 #2979ff;
+    -o-box-shadow: 0 1px 12px 0 #2979ff;
+    -ms-box-shadow: 0 1px 12px 0 #2979ff;
 }
 
 .joinHeaderName {
@@ -59,13 +59,13 @@ body {
 
 .joinheading {
     margin: 20% 0 7% 0;
-    color: white;
+    color: #2979ff;
     padding: 10px;
-    box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -moz-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -webkit-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -o-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
-    -ms-box-shadow: 0 5px 10px 0px rgba(42, 187, 155, 1);
+    box-shadow: 0 1px 12px 0 #2979ff;
+    -moz-box-shadow: 0 1px 12px 0 #2979ff;
+    -webkit-box-shadow: 0 1px 12px 0 #2979ff;
+    -o-box-shadow: 0 1px 12px 0 #2979ff;
+    -ms-box-shadow: 0 1px 12px 0 #2979ff;
 }
 
 .joinInput {
