@@ -41,7 +41,8 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
 
         console.log('User had left');
-
+        rooms.splice(array.indexOf(socket.id), 1);
+        console.log('disconnect', rooms);
         //const connection = socketIOServices.removeSocketConnection(socket.id);
 
         // if (connection) {
