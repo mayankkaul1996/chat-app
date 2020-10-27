@@ -7,18 +7,24 @@ import Chat from './components/Chat/Chat';
 import Login from './components/Login/Login';
 import Flash from './components/Flash/Flash';
 import Bus from './utils/bus';
+import Room from './components/Chat/VideoChat/VideoChat';
 
 const App = () => {
 
     window.flash = (message, type="success") => Bus.emit('flash', ({message, type}));
 
     return (
-        <Router>
+
+   
+        <div className="App">
             <Flash />
-            <Route path="/" exact component={Login}/>
-            <Route path="/join" exact component={Join}/>
-            <Route path="/chat" component={Chat}/>
-        </Router>
+            <Router>
+                <Route path="/" exact component={Login}/>
+                <Route path="/join" exact component={Join}/>
+                <Route path="/chat" component={Chat}/>
+                <Route path="/room/:roomId" component={Room} />
+            </Router>
+        </div>
     
 );
 }

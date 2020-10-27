@@ -1,14 +1,23 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
+import { v1 as uuid } from "uuid";
+
 
 import './Join.css';
 
-const Join = () =>{ 
+const Join = (props) =>{ 
 
      const [name, setName] = useState('');
      const [room, setRoom] = useState('');
 
      const userData = JSON.parse(localStorage.getItem('user'));
+
+     const createVideoChatRoom = () => {
+          const id = uuid();
+          props.history.push(`/room/${id}`);
+     }
+
+
      return (
            <div className="joinOuterContainer">
              <div className="joinMainContainer">
@@ -25,8 +34,12 @@ const Join = () =>{
                     <div><input placeholder="Room" className="joinInput mt-20" type="text" onChange={ event => setRoom(event.target.value) } /></div>
 
                     <Link onClick={ event=>( !name || !room ) ? event.preventDefault() : null } to={`/chat?name=${name}&room=${room}`}>
-                         <button className="button mt-20" type="submit">Sign In</button>
+                         <button className="button mt-20" type="submit">Join Text Chat</button>
                     </Link>
+
+                    <div>
+                    <button className="button mt-20" type="submit" onClick={createVideoChatRoom}>Join Video Chat</button>
+                    </div>
 
                 </div>
                 </div>

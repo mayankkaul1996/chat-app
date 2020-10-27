@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import queryString from 'query-string';
-import io from 'socket.io-client';
 
 import './Chat.css';
 import InfoBar from '../InfoBar/InfoBar';
 import Input from '../Input/Input';
 import Messages from '../Messages/Messages';
 import TextContainer from '../TextContainer/TextContainer';
+import { getSocket } from '../../common/socket';
 
-
-
+const ENDPOINT = `${process.env.REACT_APP_ENDPOINT}`;
 let socket;
-const ENDPOINT = `localhost:5000`;
-
-
 
 const Chat = ({location}) => {
 
@@ -22,16 +18,17 @@ const Chat = ({location}) => {
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const [users, setUsers] = useState('');
+    
 
     useEffect(()=>{ 
 
         const { name, room } = queryString.parse(location.search);
 
-        socket = io(ENDPOINT);
-
+        // socket = io(ENDPOINT);
+        socket = getSocket();
         setName(name);
         setRoom(room);
-
+        // debugger;
         socket.emit('join', { name, room }, (error)=>{
             if(error) {
                 alert(error);
@@ -47,10 +44,10 @@ const Chat = ({location}) => {
 
     }, [ENDPOINT, location.search]);
 
-
+    // debugger;
     //for messages
     useEffect(()=>{
-
+        // debugger;
         socket.on('message', message => {
             setMessages([ ...messages, message ]);
         });
