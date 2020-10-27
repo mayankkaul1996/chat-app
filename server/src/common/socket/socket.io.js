@@ -56,6 +56,7 @@ io.on('connection', (socket) => {
     //for video chat
     //ToDo :- modularize it
     socket.on("join room", roomID => {
+        console.log('join room', JSON.stringify(rooms));
         if (rooms[roomID]) {
             rooms[roomID].push(socket.id);
         } else {
@@ -69,14 +70,20 @@ io.on('connection', (socket) => {
     });
 
     socket.on("offer", payload => {
+        console.log('offer', JSON.stringify(rooms));
+
         io.to(payload.target).emit("offer", payload);
     });
 
     socket.on("answer", payload => {
+        console.log('answer', JSON.stringify(rooms));
+
         io.to(payload.target).emit("answer", payload);
     });
 
     socket.on("ice-candidate", incoming => {
+        console.log('ice-candidate', JSON.stringify(rooms));
+
         io.to(incoming.target).emit("ice-candidate", incoming.candidate);
     });
 
