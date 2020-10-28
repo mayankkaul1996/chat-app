@@ -1,14 +1,18 @@
-const users = [];
+const textUsers = [];
+const videoUsers = [];
 
 
 
 class Users {
 
-    static addUser({ id, name, room }) {
+    static addUser({ id, name, room, type }) {
         try {
 
             name = name.trim().toLowerCase();
             room = room.trim().toLowerCase();
+
+            let users;
+            type == 'TEXT' ? (users = textUsers) : (users = videoUsers);
 
             const existingUser = users.find(user => user.room == room && user.name == name);
 
@@ -27,8 +31,11 @@ class Users {
         }
     }
 
-    static removeUser(id) {
+    static removeUser(id, type) {
         try {
+
+            let users;
+            type == 'TEXT' ? (users = textUsers) : (users = videoUsers);
 
             const index = users.findIndex(user => user.id == id);
 
@@ -43,8 +50,11 @@ class Users {
         }
     }
 
-    static getUser(id) {
+    static getUser(id, type) {
         try {
+
+            let users;
+            type == 'TEXT' ? (users = textUsers) : (users = videoUsers);
 
             return users.find(user => user.id == id);
 
@@ -54,8 +64,11 @@ class Users {
         }
     }
 
-    static getUsersInRoom(room) {
+    static getUsersInRoom(room, type) {
         try {
+
+            let users;
+            type == 'TEXT' ? (users = textUsers) : (users = videoUsers);
 
             return users.filter(user => user.room == room);
 

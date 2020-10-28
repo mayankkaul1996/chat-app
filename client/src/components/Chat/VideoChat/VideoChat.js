@@ -14,9 +14,8 @@ const Room = (props) => {
         navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then(stream => {
             userVideo.current.srcObject = stream;
             userStream.current = stream;
-            debugger;
-            socketRef.current = getSocket();
-            socketRef.current.emit("join room", props.match.params.roomID);
+            socketRef.current = getSocket('chat/video');
+            socketRef.current.emit("join room", props.match.params.roomId);
 
             socketRef.current.on('other user', userID => {
                 callUser(userID);
@@ -63,6 +62,7 @@ const Room = (props) => {
     }
 
     function handleNegotiationNeededEvent(userID) {
+        debugger;
         peerRef.current.createOffer().then(offer => {
             return peerRef.current.setLocalDescription(offer);
         }).then(() => {
@@ -76,6 +76,7 @@ const Room = (props) => {
     }
 
     function handleRecieveCall(incoming) {
+        debugger;
         peerRef.current = createPeer();
         const desc = new RTCSessionDescription(incoming.sdp);
         peerRef.current.setRemoteDescription(desc).then(() => {
@@ -95,11 +96,13 @@ const Room = (props) => {
     }
 
     function handleAnswer(message) {
+        debugger;
         const desc = new RTCSessionDescription(message.sdp);
         peerRef.current.setRemoteDescription(desc).catch(e => console.log(e));
     }
 
     function handleICECandidateEvent(e) {
+        debugger;
         if (e.candidate) {
             const payload = {
                 target: otherUser.current,
@@ -110,6 +113,7 @@ const Room = (props) => {
     }
 
     function handleNewICECandidateMsg(incoming) {
+        debugger;
         const candidate = new RTCIceCandidate(incoming);
 
         peerRef.current.addIceCandidate(candidate)

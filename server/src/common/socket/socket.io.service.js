@@ -14,10 +14,10 @@ class SocketIOServices {
         }
     }
 
-    static getSocketConnectionDetails(connectionId) {
+    static getSocketConnectionDetails(connectionId, type) {
         try {
 
-            return userServices.getUser(connectionId);
+            return userServices.getUser(connectionId, type);
 
         } catch (err) {
             console.error('[CHAT] SocketIOServices : getSocketConnectionDetails : ', err);
@@ -25,10 +25,10 @@ class SocketIOServices {
         }
     }
 
-    static removeSocketConnection(connectionId) {
+    static removeSocketConnection(connectionId, type) {
         try {
 
-            return userServices.removeUser(connectionId);
+            return userServices.removeUser(connectionId, type);
 
         } catch (err) {
             console.error('[CHAT] SocketIOServices : removeSocketConnection : ', err);
@@ -36,10 +36,10 @@ class SocketIOServices {
         }
     }
 
-    static getSocketsInRoom(room) {
+    static getSocketsInRoom(room, type) {
         try {
 
-            return userServices.getUsersInRoom(room);
+            return userServices.getUsersInRoom(room, type);
 
         } catch (err) {
             console.error('[CHAT] SocketIOServices : removeSocketConnection : ', err);

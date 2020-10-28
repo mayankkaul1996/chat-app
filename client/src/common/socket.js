@@ -1,16 +1,24 @@
 import io from 'socket.io-client';
 
 const ENDPOINT = `${process.env.REACT_APP_ENDPOINT}`;
-debugger;
 
-let socket;
+let sockets = {};
 
-const connect  = () => {
-    return socket = io(ENDPOINT);
+const connect = (namespace) => {
+
+    let serverEndPoint = `${ENDPOINT}${namespace ? '/' + namespace : ''}`;
+
+    console.log('serverEndPoint', serverEndPoint);
+
+    return io(serverEndPoint);
+
 };
 
-export const getSocket = ()=>{
-    if(socket) return socket;
+export const getSocket = (namespace) => {
+    if ((namespace ? namespace : '/') in sockets) {
+        return sockets[namespace];
+    }
 
-    return connect();
+    return connect(namespace);
+
 }
