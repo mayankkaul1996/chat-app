@@ -7,13 +7,26 @@
 }
 
 .container {
+    padding: 0%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     background: #FFFFFF;
     border-radius: 8px;
     height: 60%;
-    width: 35%;
+    width: 100%;
+}
+
+.chatInfoFar {
+    width: 100%;
+}
+
+.chatMessageSection {
+    width: 100% !important;
+}
+
+.chatInputBox {
+    width: 100% !important;
 }
 
 @media (min-width: 320px) and (max-width: 480px) {
